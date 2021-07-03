@@ -1,0 +1,141 @@
+<Script>
+//https://docs.google.com/spreadsheets/d/1nxW-fh5ef6L_RI-Ass-JwHWkfEI7RBvCs8n5lBTqnAY/edit#gid=1155281980
+//https://script.google.com/macros/s/AKfycbysERHNIDH-t6KQM7pg2YOUjUW8jpuZN20hypg1nClgE9k8bV0/exec?TS=123&StamBNr=321&VraagNr=vraag&Antwoord=antwoord&ExtraInfo=Extra
+
+//https://script.google.com/macros/s/AKfycbysERHNIDH-t6KQM7pg2YOUjUW8jpuZN20hypg1nClgE9k8bV0/exec
+///https://script.google.com/macros/s/AKfycbysERHNIDH-t6KQM7pg2YOUjUW8jpuZN20hypg1nClgE9k8bV0/exec
+//https://script.google.com/macros/s/AKfycbxHfDpFehQbPegfDVGJy9HYS5NoD6GD5nWg2rWjHkw/dev?TS=123&StamBNr=321&VraagNr=vraag&Antwoord=antwoord&ExtraInfo=Extra
+
+function show(item){
+
+
+ // var table = document.getElementById('TS');
+//  table.style.visibility='hidden';
+//  table.style.height='0';
+  var table = document.getElementById(item.value);
+  table.style.visibility='';
+
+  var TS= document.getElementById('TS').value;
+  var StamBNr= document.getElementById('StamBNr').value;
+  var VraagNr = document.getElementById('VraagNr').value;
+  var Antwoord = document.getElementById('Antwoord').value;
+  var ExtraInfo = document.getElementById('ExtraInfo').value;
+
+  var URL = "https://script.google.com/macros/s/AKfycbxHfDpFehQbPegfDVGJy9HYS5NoD6GD5nWg2rWjHkw/dev?TS="+TS+"&StamBNr="+StamBNr+"&VraagNr=vraag&Antwoord=antwoord&ExtraInfo=Extra";
+      URL = "https://script.google.com/macros/s/AKfycbysERHNIDH-t6KQM7pg2YOUjUW8jpuZN20hypg1nClgE9k8bV0/exec?TS="+TS+"&StamBNr="+StamBNr+"&VraagNr="+VraagNr+"&Antwoord="+Antwoord+"&ExtraInfo="+ExtraInfo+"";
+  var json_obj = JSON.parse(Get(URL));
+
+}
+function Get(yourUrl){
+    var Httpreq = new XMLHttpRequest(); // a new request
+    Httpreq.open("GET",yourUrl,false);
+    Httpreq.send(null);
+    return Httpreq.responseText;          
+}
+function Select(comb){
+
+  var value = comb.options[comb.selectedIndex].value;
+
+  document.getElementById('VraagNr').value= "Select"
+  document.getElementById('Antwoord').value= value;
+
+}
+
+function Anser(item,Selected,Oms){
+
+   document.getElementById('VraagNr').value= document.querySelector('input[name='+Selected+']:checked').value;
+  document.getElementById('Antwoord').value=item;
+  document.getElementById('ExtraInfo').value=document.getElementById(Oms).value;
+
+}
+</Script>
+<form action="" method="post" name="Groeien" dir="ltr" lang="nl">
+<H1>e-TS</H1>
+Deze lijst is ... 
+<table width="100%">
+    <tr><td colspan="2">voertuig<input id='TS' value='9232'></td><tr>
+    <tr><td colspan="2">bv<input id='StamBNr' value='333'></td><tr>
+    <tr><td colspan="2">Vraag<input id='VraagNr' value='VraagNr'></td><tr>
+    <tr><td colspan="2">Antwoord<input id='Antwoord' value='Antwoord'></td><tr>
+    <tr><td colspan="2">ExtraInfo<input id='ExtraInfo' value='ExtraInfo'></td><tr>
+</table>
+
+<DIV id='home1' name='Home1'>
+<table width="100%" id='home' Name='home'>
+    <tr>
+       <td colspan="2"><img src='.\overal.png' height='100px'></td>
+       <td colspan="2">om welk TS gaat het <input id='TS' value='9232'></td>
+    <tr>
+    <tr>
+       <td>Luik:</td>
+       <td>
+         <select id="luik" name="luik" onchange='Select(this); show(this);' >
+            <option value="1">luik 1</option>
+            <option value="2">luik 2</option>
+            <option value="3">luik 3</option>
+            <option value="4">luik 4</option>
+            <option value="5">luik 5</option>
+            <option value="6">luik 6</option>
+            <option value="7">luik 7</option>
+            <option value="7a">luik 7a</option>
+            <option value="7b">luik 7b</option>
+            <option value="8">luik 8</option>
+            <option value="8a">luik 8a</option>
+            <option value="8b">luik 8b</option>
+            <option value="dakl">dak ladderrek links</option>
+            <option value="dakr">dak ladderrek rechts</option>
+            <option value="chaufeur">Chaufeur</option>
+            <option value="bevelvoerder">Bevelvoerder</option>
+         </select>
+       </td>
+     <tr>
+</table>
+</Div>
+ <table width="200" id='1' name='1' style='visibility:hidden'>
+    <tr>
+      <td colspan="1"><h2>U wilt iets doorgeven over luik 1</h2></td>
+      <td colspan="1"><img src='.\A7302254.jpg' height='100px'></td>
+      <td colspan="1">
+         O-bundel 1: <input  type="radio" id="K1Ob1" name="Radio_K1" value="O-bundel 1" ><br>
+         Krat1:      <input  type="radio" id="K1Krat1" name="Radio_K1" value="Krat1"><br>
+      </td>
+      <td colspan="1">
+         <A href='#' > 
+           <img src='./duim-omhoog.png' height='100px' onclick='Anser("Goed","Radio_K1","K1_Omsch");show(this);'><br>
+           <img src='./duim-omlaag.png' height='100px' onclick='Anser("Fout","Radio_K1","K1_Omsch");show(this);'></a>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">omschrijving</td>
+      <td colspan="2"><input type="Item_Kast1_Omsch" ID="K1_Omsch"></td>
+    </tr>
+  </table>
+ <table width="200" id='2' name='2' style='visibility:hidden'>
+    <tr>
+      <td colspan="1"><h2>U wilt iets doorgeven over luik 1</h2></td>
+      <td colspan="1"><img src='.\A7302254.jpg' height='100px'></td>
+      <td colspan="1">
+         O-bundel 1: <input  type="radio" id="K21Ob1" name="Radio_K1" value="O-bundel 1" ><br>
+         Krat1:      <input  type="radio" id="K2Krat1" name="Radio_K1" value="Krat1"><br>
+      </td>
+      <td colspan="1">
+         <A href='#' > 
+           <img src='./duim-omhoog.png' height='100px' onclick='Anser("Goed","Radio_K2","K2_Omsch");show(this);'><br>
+           <img src='./duim-omlaag.png' height='100px' onclick='Anser("Fout","Radio_K2","K2_Omsch");show(this);'></a>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">omschrijving</td>
+      <td colspan="2"><input type="Item_Kast2_Omsch" ID="K2_Omsch"></td>
+    </tr>
+  </table>
+
+
+
+
+
+
+
+
+
+</form>
